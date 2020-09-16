@@ -19,14 +19,44 @@
 PROD_CERTS := vendor/hentai/build/target/product/security
 
 # AVB
-BOARD_AVB_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_KEY_PATH := $(PROD_CERTS)/hentai_rsa2048.pem
+BOARD_AVB_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 
-# Recovery
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_RECOVERY_KEY_PATH := $(PROD_CERTS)/hentai_rsa2048.pem
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+# AVB BOOT
+BOARD_AVB_BOOT_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 3
 
-# Dynamic paritions
-BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := $(PROD_CERTS)/hentai_rsa2048.pem
+ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
+# settings for system, which is configured as chain partition
+BOARD_AVB_SYSTEM_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_SYSTEM_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
+
+# settings for vendor, which is configured as chain partition
+BOARD_AVB_VENDOR_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_VENDOR_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_VENDOR_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_VENDOR_ROLLBACK_INDEX_LOCATION := 4
+else
+# settings for system
+BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
+
+# settings for vendor
+BOARD_AVB_VBMETA_VENDOR_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_VBMETA_VENDOR_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
+BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION := 1
+endif
+
+# Chimera signature flags
+SIGNING_FLAGS := -e PrebuiltGmsCoreRvc_AdsDynamite.apk= -e PrebuiltGmsCoreRvc_DynamiteLoader.apk= -e PrebuiltGmsCoreRvc_DynamiteModulesA.apk= -e PrebuiltGmsCoreRvc_DynamiteModulesC.apk= -e PrebuiltGmsCoreRvc_GoogleCertificates.apk= -e PrebuiltGmsCoreRvc_MapsDynamite.apk= -e PrebuiltGmsCoreRvc_MeasurementDynamite.apk= -e AndroidPlatformServices.apk=
+
+# Apex signature flags
+APEX_SIGNING_FLAGS := -e com.android.art.release.apex=$(PROD_CERTS)/releasekey -e com.android.art.debug.apex=$(PROD_CERTS)/releasekey -e com.android.i18n.apex=$(PROD_CERTS)/releasekey -e com.android.runtime.apex=$(PROD_CERTS)/releasekey -e com.android.tethering.apex=$(PROD_CERTS)/networkstack -e com.android.vndk.current.apex=$(PROD_CERTS)/releasekey
