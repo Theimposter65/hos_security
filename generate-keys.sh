@@ -4,6 +4,6 @@
 # $ '/C=US/ST=California/L=Mountain View/O=Android/OU=Android/CN=Android/emailAddress=android@android.com' > hentai
 
 export hentai='/C=JP/ST=Tokyo/L=Tokyo/O=Raphielscape LLC. and Haruka LLC./OU=Raphielscape LLC. and Haruka LLC./CN=Raphielscape LLC. and Haruka LLC./emailAddress=legal@hentaios.com'
-for x in releasekey platform shared media networkstack; do \
+for x in testkey releasekey platform shared media networkstack; do \
     ../../../../../../development/tools/make_key ./$x "$hentai"; \
 done
