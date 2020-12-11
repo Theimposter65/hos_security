@@ -28,6 +28,3 @@ BOARD_AVB_BOOT_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
 BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 3
-
-# Chimera signature flags
-SIGNING_FLAGS := -e PrebuiltGmsCoreRvc_AdsDynamite.apk= -e PrebuiltGmsCoreRvc_DynamiteLoader.apk= -e PrebuiltGmsCoreRvc_DynamiteModulesA.apk= -e PrebuiltGmsCoreRvc_DynamiteModulesC.apk= -e PrebuiltGmsCoreRvc_GoogleCertificates.apk= -e PrebuiltGmsCoreRvc_MapsDynamite.apk= -e PrebuiltGmsCoreRvc_MeasurementDynamite.apk= -e AndroidPlatformServices.apk=
