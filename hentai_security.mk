@@ -21,7 +21,11 @@ PROD_CERTS := vendor/hentai/build/target/product/security
 # AVB
 BOARD_AVB_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
 BOARD_AVB_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+
+# Android Verified Boot (AVB):
+#   Set the rollback index to zero, to prevent the device bootloader from
+#   updating the last seen rollback index in the tamper-evident storage.
+BOARD_AVB_ROLLBACK_INDEX := 0
 
 # AVB BOOT
 BOARD_AVB_BOOT_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
