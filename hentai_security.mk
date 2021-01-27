@@ -18,6 +18,9 @@
 # Define security directory
 PROD_CERTS := vendor/hentai/build/target/product/security
 
+# AVB ( Enable )
+BOARD_AVB_ENABLE := true
+
 # AVB
 BOARD_AVB_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
 BOARD_AVB_ALGORITHM := SHA256_RSA4096
