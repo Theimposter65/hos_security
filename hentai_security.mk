@@ -28,10 +28,5 @@ BOARD_AVB_ALGORITHM := SHA256_RSA4096
 # Android Verified Boot (AVB):
 #   Set the rollback index to zero, to prevent the device bootloader from
 #   updating the last seen rollback index in the tamper-evident storage.
-BOARD_AVB_ROLLBACK_INDEX := 0
+# BOARD_AVB_ROLLBACK_INDEX := 0
 
-# AVB BOOT
-BOARD_AVB_BOOT_KEY_PATH := $(PROD_CERTS)/hentai_rsa4096.pem
-BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
-BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 3
